@@ -14,15 +14,15 @@ These functions are still missing:
 
 ## How to use
 To use this during evaluations or just in your own project, follow these steps:
-1. Copy the `munit.c`, `munit.h` and `test.c` files into your project's root folder.
-2. Add the following task to your Makefile:
+1. Clone this repo onto your machine.
+2. Copy the `munit.c`, `munit.h` and `test.c` files into your libft project's root folder.
+3. Add the following task to your Makefile:
   ```make
   test : re
   	cc munit.c test.c -L . -l ft -o test
   	./test
   ```
- 3. That's it! Run `make test` to recompile the library, then compile and run the test file.
- 4. If you use this during development, you can add those files to your `.gitignore`, and you can set up a norm checking task that only validates your files, because the test suite is obviously not norm compliant.
+4. That's it! Run `make test` to recompile the library, then compile and run the test file.
  
  ## Configuration
  Near the top of `test.c` there are several booleans which let you turn different parts of the test suite (part 1, part 2 and the bonus part) on or off. By setting the value to `false`, the tests will be skipped. __Please note that the tests won't compile if you have not yet written all of the functions in your selected parts!__ The ability to opt out of later parts is there for your convenience.
