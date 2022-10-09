@@ -2,7 +2,7 @@
 This is a small [µnit](https://nemequ.github.io/munit) test suite for libft, the first project in 42's core curriculum. Since the final product is a collection of functions, it lends itself very well to unit testing. Where possible, the tests will run your version of the standard library functions against the original and compare their output. For the Part 2 functions, I've done my best to make a comprehensive set of test cases.
 
 ## WIP in progress
-Right now, the tests cover almost all of part 1, a little bit of part 2 and none of the bonus. More to come as I actually write these myself, hehe xd.
+Right now, the tests cover almost all of part 1, a little bit of part 2 and none of the bonus. More to come as I actually write these myself.
 These functions are still missing:
 * Part 1:
   * `ft_strlcat`
