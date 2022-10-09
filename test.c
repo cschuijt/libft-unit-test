@@ -6,7 +6,7 @@
 /*   By: cschuijt <cschuijt@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/08 17:48:56 by cschuijt      #+#    #+#                 */
-/*   Updated: 2022/10/09 22:44:40 by cschuijt      ########   odam.nl         */
+/*   Updated: 2022/10/09 23:12:16 by cschuijt      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	ft_norm(int i)
 #if (TEST_PART_1 == true)
 MunitResult	ft_atoi_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	munit_assert_int(atoi("0"), ==, ft_atoi("0"));
 	munit_assert_int(atoi("-5"), ==, ft_atoi("-5"));
 	munit_assert_int(atoi("-----10"), ==, ft_atoi("-----10"));
@@ -74,8 +72,6 @@ MunitResult	ft_atoi_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strlen_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	munit_assert_int(strlen("asdf"), ==, ft_strlen("asdf"));
 	munit_assert_int(strlen("   "), ==, ft_strlen("   "));
 	munit_assert_int(strlen(""), ==, ft_strlen(""));
@@ -88,8 +84,6 @@ MunitResult	ft_strlen_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strchr_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str;
 	char	*emptystr;
 
@@ -113,8 +107,6 @@ MunitResult	ft_strchr_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strrchr_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str;
 	char	*emptystr;
 
@@ -138,8 +130,6 @@ MunitResult	ft_strrchr_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strdup_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str;
 
 	munit_assert_string_equal(strdup("asdf"), ft_strdup("asdf"));
@@ -159,8 +149,6 @@ MunitResult	ft_strdup_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_memset_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str1, *str2;
 	char	*pnt1, *pnt2;
 
@@ -192,8 +180,6 @@ MunitResult	ft_memset_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_bzero_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str1, *str2;
 
 	str1 = malloc(sizeof(char) * 30);
@@ -222,8 +208,6 @@ MunitResult	ft_bzero_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_memcpy_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str, *str2, *pnt1, *pnt2;
 	int		i;
 
@@ -255,8 +239,6 @@ MunitResult	ft_memcpy_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_memmove_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str, *str2, *pnt1, *pnt2;
 	int		i;
 
@@ -305,29 +287,21 @@ MunitResult	ft_memmove_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strlcpy_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_strlcat_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_strncmp_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_memchr_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str;
 
 	str = "Hello world! This is a funny string w1th lots of 1nteresti\ng char\0acters.";
@@ -345,8 +319,6 @@ MunitResult	ft_memchr_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_memcmp_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	munit_assert_int(ft_norm(memcmp("asdf", "asdf", 3)), ==, ft_norm(ft_memcmp("asdf", "asdf", 3)));
 	munit_assert_int(ft_norm(memcmp("asdF", "asdf", 3)), ==, ft_norm(ft_memcmp("asdF", "asdf", 3)));
 	munit_assert_int(ft_norm(memcmp("asdF", "asdf", 4)), ==, ft_norm(ft_memcmp("asdF", "asdf", 4)));
@@ -359,15 +331,11 @@ MunitResult	ft_memcmp_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strnstr_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_calloc_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	char	*str1, *str2;
 
 	str1 = calloc(sizeof(char), 20);
@@ -387,8 +355,6 @@ MunitResult	ft_calloc_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_isalnum_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	int	i;
 
 	i = 0;
@@ -402,8 +368,6 @@ MunitResult	ft_isalnum_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_isalpha_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	int	i;
 
 	i = 0;
@@ -417,8 +381,6 @@ MunitResult	ft_isalpha_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_isascii_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	int	i;
 
 	i = -1;
@@ -432,8 +394,6 @@ MunitResult	ft_isascii_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_isdigit_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	int	i;
 
 	i = 0;
@@ -447,8 +407,6 @@ MunitResult	ft_isdigit_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_isprint_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	int	i;
 
 	i = 0;
@@ -462,8 +420,6 @@ MunitResult	ft_isprint_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_tolower_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	int	i;
 
 	i = 0;
@@ -477,8 +433,6 @@ MunitResult	ft_tolower_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_toupper_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_1)
-		return (MUNIT_SKIP);
 	int	i;
 
 	i = 0;
@@ -684,8 +638,6 @@ MunitTest part1_tests[] = {
 #if (TEST_PART_2 == true)
 MunitResult	ft_substr_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	munit_assert_string_equal(ft_substr("asdfghj", 0, 3), "asd");
 	munit_assert_string_equal(ft_substr("asdfghj", 0, 20), "asdfghj");
 	munit_assert_string_equal(ft_substr("", 0, 3), "");
@@ -702,8 +654,6 @@ MunitResult	ft_substr_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_itoa_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	munit_assert_string_equal(ft_itoa(1), "1");
 	munit_assert_string_equal(ft_itoa(2147483647), "2147483647");
 	munit_assert_string_equal(ft_itoa(5000), "5000");
@@ -716,64 +666,46 @@ MunitResult	ft_itoa_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strjoin_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_strtrim_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_split_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_strmapi_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_striteri_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_putchar_fd_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_putstr_fd_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_putendl_fd_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
 MunitResult	ft_putnbr_fd_test(const MunitParameter params[], void *data)
 {
-	if (!TEST_PART_2)
-		return (MUNIT_SKIP);
 	return (MUNIT_SKIP);
 }
 
