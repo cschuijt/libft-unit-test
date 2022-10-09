@@ -16,5 +16,6 @@ To use this during evaluations or just in your own project, follow these steps:
  ## Omissions
  Unfortunately, not everything can be automatically tested, so some manual checking is still required for the following:
  * Malloc protection! The tests can't simulate a malloc failure (as far as I'm aware), so you will need to check for yourself whether appropriate precautions have been taken. If you don't, Moulinette will.
+ * How you handle a zero-input in `ft_calloc`, because the specification leaves you to decide whether to pass a memory address or NULL.
  
  Beware that I haven't run my project through evals and Moulinette yet, so these tests do not necessarily reflect what is expected of your code. My tests may be off the mark, or may error when the code actually passes by Moulinette's standards. __Your mileage may vary.__ If any discrepancies show up later down the line, I'll update this.
