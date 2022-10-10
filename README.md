@@ -5,9 +5,6 @@ This is a small [µnit](https://nemequ.github.io/munit) test suite for libft, th
 Right now, the tests cover almost all of part 1, a little bit of part 2 and none of the bonus. More to come as I actually write these myself.
 These functions are still missing:
 * Part 1:
-  * `ft_strlcat`
-  * `ft_strlcpy`
-  * `ft_strncmp`
   * `ft_strnstr`
 * Part 2:
   * Everything except for `ft_itoa` and `ft_substr`. It's my first week here, okay?
