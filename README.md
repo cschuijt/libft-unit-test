@@ -4,8 +4,6 @@ This is a small [µnit](https://nemequ.github.io/munit) test suite for libft, th
 ## WIP in progress
 Right now, the tests cover almost all of part 1, a little bit of part 2 and none of the bonus. More to come as I actually write these myself.
 These functions are still missing:
-* Part 1:
-  * `ft_strnstr`
 * Part 2:
   * Everything except for `ft_itoa` and `ft_substr`. It's my first week here, okay?
 
@@ -19,7 +17,7 @@ To use this during evaluations or just in your own project, follow these steps:
   	cc munit.c test.c -L . -l ft -o test
   	./test
   ```
-4. That's it! Run `make test` to recompile the library, then compile and run the test file.
+4. That's it! Run `make test` to recompile the library, then compile and run the test file. If you're on an operating system which doesn't use BSD libaries by default, you may have to add `-lbsd` to the task listed above.
  
  ## Configuration
  Near the top of `test.c` there are several booleans which let you turn different parts of the test suite (part 1, part 2 and the bonus part) on or off. By setting the value to `false`, the tests will be skipped. __Please note that the tests won't compile if you have not yet written all of the functions in your selected parts!__ The ability to opt out of later parts is there for your convenience.
