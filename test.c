@@ -6,7 +6,7 @@
 /*   By: cschuijt <cschuijt@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/08 17:48:56 by cschuijt      #+#    #+#                 */
-/*   Updated: 2022/10/10 23:16:55 by cschuijt      ########   odam.nl         */
+/*   Updated: 2022/10/11 14:02:09 by cschuijt      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,7 +444,24 @@ MunitResult	ft_memcmp_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strnstr_test(const MunitParameter params[], void *data)
 {
-	return (MUNIT_SKIP);
+	char *str = "This is a very long string with lots of fun\ny things in it. A a A\0z";
+
+	munit_assert_ptr_equal(strnstr(str, "is", 0), ft_strnstr(str, "is", 0));
+	munit_assert_ptr_equal(strnstr(str, "is", 10), ft_strnstr(str, "is", 10));
+	munit_assert_ptr_equal(strnstr(str, "is", 900), ft_strnstr(str, "is", 900));
+	munit_assert_ptr_equal(strnstr(str, "\0", 69), ft_strnstr(str, "\0", 69));
+	munit_assert_ptr_equal(strnstr(str, " ", 67), ft_strnstr(str, " ", 67));
+	munit_assert_ptr_equal(strnstr(str, "z", 68), ft_strnstr(str, "z", 68));
+	munit_assert_ptr_equal(strnstr(str, "funny", 67), ft_strnstr(str, "funny", 67));
+	munit_assert_ptr_equal(strnstr(str, "offun", 67), ft_strnstr(str, "offun", 67));
+	munit_assert_ptr_equal(strnstr(str, "of fun", 67), ft_strnstr(str, "of fun", 67));
+	munit_assert_ptr_equal(strnstr(str, "\n", 67), ft_strnstr(str, "\n", 67));
+	munit_assert_ptr_equal(strnstr(str, "a", 70), ft_strnstr(str, "a", 70));
+	munit_assert_ptr_equal(strnstr(str, "lo", 70), ft_strnstr(str, "lo", 70));
+	munit_assert_ptr_equal(strnstr(str, "lotz", 70), ft_strnstr(str, "lotz", 70));
+	munit_assert_ptr_equal(strnstr(str, ".", 30), ft_strnstr(str, ".", 30));
+	munit_assert_ptr_equal(strnstr(str, ".", 70), ft_strnstr(str, ".", 70));
+	return (MUNIT_OK);
 }
 
 MunitResult	ft_calloc_test(const MunitParameter params[], void *data)
