@@ -6,7 +6,7 @@
 /*   By: cschuijt <cschuijt@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/08 17:48:56 by cschuijt      #+#    #+#                 */
-/*   Updated: 2022/10/11 14:02:09 by cschuijt      ########   odam.nl         */
+/*   Updated: 2022/10/15 21:46:56 by cschuijt      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,9 @@ MunitResult	ft_atoi_test(const MunitParameter params[], void *data)
 	munit_assert_int(atoi("1001   23432"), ==, ft_atoi("1001   23432"));
 	munit_assert_int(atoi(""), ==, ft_atoi(""));
 	munit_assert_int(atoi("2147483647"), ==, ft_atoi("2147483647"));
+	munit_assert_int(atoi("2147483648"), ==, ft_atoi("2147483648"));
 	munit_assert_int(atoi("-2147483648"), ==, ft_atoi("-2147483648"));
+	munit_assert_int(atoi("-2147483649"), ==, ft_atoi("-2147483649"));
 	munit_assert_int(atoi("    \n666"), ==, ft_atoi("    \n666"));
 	munit_assert_int(atoi("fjkdffd444"), ==, ft_atoi("fjkdffd444"));
 	munit_assert_int(atoi("   54.gkrrgkr"), ==, ft_atoi("   54.gkrrgkr"));
@@ -84,11 +86,11 @@ MunitResult	ft_strlen_test(const MunitParameter params[], void *data)
 
 MunitResult	ft_strchr_test(const MunitParameter params[], void *data)
 {
-	char	*str;
-	char	*emptystr;
+	char	*str, *emptystr, *str2, *str3;
 
 	str = "Hello world! This is a very long str1ng w1th funny cha\nracters.\0z";
 	emptystr = "";
+	str2 = "teste";
 	munit_assert_ptr_equal(strchr(str, 'w'), ft_strchr(str, 'w'));
 	munit_assert_ptr_equal(strchr(str, 'e'), ft_strchr(str, 'e'));
 	munit_assert_ptr_equal(strchr(str, 'H'), ft_strchr(str, 'H'));
@@ -100,6 +102,7 @@ MunitResult	ft_strchr_test(const MunitParameter params[], void *data)
 	munit_assert_ptr_equal(strchr(str, 'x'), ft_strchr(str, 'x'));
 	munit_assert_ptr_equal(strchr(str, '\n'), ft_strchr(str, '\n'));
 	munit_assert_ptr_equal(strchr(str, 'z'), ft_strchr(str, 'z'));
+	munit_assert_ptr_equal(strchr(str2, 'e'), ft_strchr(str2, 'e'));
 	munit_assert_ptr_equal(strchr(emptystr, 'z'), ft_strchr(emptystr, 'z'));
 	munit_assert_ptr_equal(strchr(emptystr, '\0'), ft_strchr(emptystr, '\0'));
 	return (MUNIT_OK);
@@ -334,7 +337,7 @@ MunitResult	ft_strlcat_test(const MunitParameter params[], void *data)
 {
 	char	*str1, *str2, *str3, *str4, *str5;
 
-	str1 = "qwerty \n535tt\0dsffd";
+	str1 = "qwerty \n535tt\0dsffd"; // 13
 	str2 = calloc(sizeof(char), 30);
 	str3 = calloc(sizeof(char), 30);
 	str4 = calloc(sizeof(char), 10);
@@ -393,6 +396,15 @@ MunitResult	ft_strlcat_test(const MunitParameter params[], void *data)
 	munit_assert_memory_equal(10, str4, str5);
 	free(str2);
 	free(str3);
+	char *str6 = ft_calloc(sizeof(char), 10);
+	memset(str6, 'P', 10);
+	munit_assert_int(ft_strlcat(str6, "1234", 5), ==, 9);
+	munit_assert_int(ft_strlcat(str6, "1234", 10), ==, 14);
+	munit_assert_memory_equal(10, str6, "PPPPPPPPPP");
+	ft_bzero(str6, 10);
+	ft_strlcat(str6, "1234", 0);
+	munit_assert_string_equal(str6, "");
+	free(str6);
 	return (MUNIT_OK);
 }
 
@@ -410,6 +422,7 @@ MunitResult	ft_strncmp_test(const MunitParameter params[], void *data)
 	munit_assert_int(ft_norm(strncmp("asdfgh", "asdf", 5)), ==, ft_norm(ft_strncmp("asdfgh", "asdf", 5)));
 	munit_assert_int(ft_norm(strncmp("asdfgh", "asdf", 3)), ==, ft_norm(ft_strncmp("asdfgh", "asdf", 3)));
 	munit_assert_int(ft_norm(strncmp("asd\0gh", "a\0dfgh", 7)), ==, ft_norm(ft_strncmp("asd\0gh", "a\0dfgh", 7)));
+	munit_assert_int(ft_norm(strncmp("asdf\0", "asdf\200", 5)), ==, ft_norm(ft_strncmp("asdf\0", "asdf\200", 5)));
 	return (MUNIT_OK);
 }
 
@@ -439,6 +452,8 @@ MunitResult	ft_memcmp_test(const MunitParameter params[], void *data)
 	munit_assert_int(ft_norm(memcmp("AsdF", "asdf", 1)), ==, ft_norm(ft_memcmp("AsdF", "asdf", 1)));
 	munit_assert_int(ft_norm(memcmp("", "", 0)), ==, ft_norm(ft_memcmp("", "", 0)));
 	munit_assert_int(ft_norm(memcmp("AsdF", "asdf", 0)), ==, ft_norm(ft_memcmp("AsdF", "asdf", 0)));
+	munit_assert_int(ft_norm(memcmp("asd\200", "asd\0", 4)), ==, ft_norm(ft_memcmp("asd\200", "asd\0", 4)));
+	munit_assert_int(ft_norm(memcmp("asd\0", "asd\200", 4)), ==, ft_norm(ft_memcmp("asd\0", "asd\200", 4)));
 	return (MUNIT_OK);
 }
 
@@ -446,21 +461,24 @@ MunitResult	ft_strnstr_test(const MunitParameter params[], void *data)
 {
 	char *str = "This is a very long string with lots of fun\ny things in it. A a A\0z";
 
-	munit_assert_ptr_equal(strnstr(str, "is", 0), ft_strnstr(str, "is", 0));
-	munit_assert_ptr_equal(strnstr(str, "is", 10), ft_strnstr(str, "is", 10));
-	munit_assert_ptr_equal(strnstr(str, "is", 900), ft_strnstr(str, "is", 900));
-	munit_assert_ptr_equal(strnstr(str, "\0", 69), ft_strnstr(str, "\0", 69));
-	munit_assert_ptr_equal(strnstr(str, " ", 67), ft_strnstr(str, " ", 67));
-	munit_assert_ptr_equal(strnstr(str, "z", 68), ft_strnstr(str, "z", 68));
-	munit_assert_ptr_equal(strnstr(str, "funny", 67), ft_strnstr(str, "funny", 67));
-	munit_assert_ptr_equal(strnstr(str, "offun", 67), ft_strnstr(str, "offun", 67));
-	munit_assert_ptr_equal(strnstr(str, "of fun", 67), ft_strnstr(str, "of fun", 67));
-	munit_assert_ptr_equal(strnstr(str, "\n", 67), ft_strnstr(str, "\n", 67));
-	munit_assert_ptr_equal(strnstr(str, "a", 70), ft_strnstr(str, "a", 70));
-	munit_assert_ptr_equal(strnstr(str, "lo", 70), ft_strnstr(str, "lo", 70));
-	munit_assert_ptr_equal(strnstr(str, "lotz", 70), ft_strnstr(str, "lotz", 70));
-	munit_assert_ptr_equal(strnstr(str, ".", 30), ft_strnstr(str, ".", 30));
-	munit_assert_ptr_equal(strnstr(str, ".", 70), ft_strnstr(str, ".", 70));
+	munit_assert_ptr_equal(NULL, ft_strnstr(str, "is", 0));
+	munit_assert_ptr_equal(&str[2], ft_strnstr(str, "is", 10));
+	munit_assert_ptr_equal(&str[2], ft_strnstr(str, "is", 900));
+	munit_assert_ptr_equal(&str[0], ft_strnstr(str, "\0", 69));
+	munit_assert_ptr_equal(&str[0], ft_strnstr(str, "", 69));
+	munit_assert_ptr_equal(&str[0], ft_strnstr(str, "This", 69));
+	munit_assert_ptr_equal(&str[4], ft_strnstr(str, " ", 67));
+	munit_assert_ptr_equal(NULL, ft_strnstr(str, "z", 68));
+	munit_assert_ptr_equal(NULL, ft_strnstr(str, "funny", 67));
+	munit_assert_ptr_equal(NULL, ft_strnstr(str, "offun", 67));
+	munit_assert_ptr_equal(&str[37], ft_strnstr(str, "of fun", 67));
+	munit_assert_ptr_equal(&str[43], ft_strnstr(str, "\n", 67));
+	munit_assert_ptr_equal(&str[8], ft_strnstr(str, "a", 70));
+	munit_assert_ptr_equal(&str[15], ft_strnstr(str, "lo", 70));
+	munit_assert_ptr_equal(NULL, ft_strnstr(str, "lotz", 70));
+	munit_assert_ptr_equal(NULL, ft_strnstr(str, ".", 30));
+	munit_assert_ptr_equal(&str[58], ft_strnstr(str, ".", 70));
+	munit_assert_ptr_equal(NULL, ft_strnstr(str, "long string", 20));
 	return (MUNIT_OK);
 }
 
@@ -785,38 +803,122 @@ MunitResult	ft_substr_test(const MunitParameter params[], void *data)
 MunitResult	ft_itoa_test(const MunitParameter params[], void *data)
 {
 	munit_assert_string_equal(ft_itoa(1), "1");
+	munit_assert_string_equal(ft_itoa(9), "9");
+	munit_assert_string_equal(ft_itoa(10), "10");
+	munit_assert_string_equal(ft_itoa(11), "11");
 	munit_assert_string_equal(ft_itoa(2147483647), "2147483647");
 	munit_assert_string_equal(ft_itoa(5000), "5000");
 	munit_assert_string_equal(ft_itoa(-44), "-44");
 	munit_assert_string_equal(ft_itoa(-6000), "-6000");
+	munit_assert_string_equal(ft_itoa(-789000), "-789000");
 	munit_assert_string_equal(ft_itoa(-2147483648), "-2147483648");
 	munit_assert_string_equal(ft_itoa(0), "0");
+	munit_assert_string_equal(ft_itoa(-1), "-1");
 	return (MUNIT_OK);
 }
 
 MunitResult	ft_strjoin_test(const MunitParameter params[], void *data)
 {
-	return (MUNIT_SKIP);
+	munit_assert_string_equal(ft_strjoin("asdf", "fghj"), "asdffghj");
+	munit_assert_string_equal(ft_strjoin("a", "fghj"), "afghj");
+	munit_assert_string_equal(ft_strjoin("asdf", "j"), "asdfj");
+	munit_assert_string_equal(ft_strjoin("asdf", ""), "asdf");
+	munit_assert_string_equal(ft_strjoin("", "fghj"), "fghj");
+	munit_assert_string_equal(ft_strjoin("asdf", "fghj"), "asdffghj");
+	munit_assert_string_equal(ft_strjoin("", ""), "");
+	return (MUNIT_OK);
 }
 
 MunitResult	ft_strtrim_test(const MunitParameter params[], void *data)
 {
-	return (MUNIT_SKIP);
+	munit_assert_string_equal(ft_strtrim("   asdf     ", " "), "asdf");
+	munit_assert_string_equal(ft_strtrim("asdf    ", " "), "asdf");
+	munit_assert_string_equal(ft_strtrim("    asdf", " "), "asdf");
+	munit_assert_string_equal(ft_strtrim("asdf", " "), "asdf");
+	munit_assert_string_equal(ft_strtrim("asdf", ""), "asdf");
+	munit_assert_string_equal(ft_strtrim("", ""), "");
+	munit_assert_string_equal(ft_strtrim("", "asdf"), "");
+	munit_assert_string_equal(ft_strtrim("QWEWQasdfEEEEEWWWWQEEEW", "QWE"), "asdf");
+	munit_assert_string_equal(ft_strtrim("QWEWQaEEEEEWWWWQEEEW", "QWERT"), "a");
+	munit_assert_string_equal(ft_strtrim("EEEEasfdEEEsdfdsEdfEE", "E"), "asfdEEEsdfdsEdf");
+	munit_assert_string_equal(ft_strtrim("aaaaaaaa", "a"), "");
+	return (MUNIT_OK);
 }
 
 MunitResult	ft_split_test(const MunitParameter params[], void *data)
 {
-	return (MUNIT_SKIP);
+	char	**array = ft_split("   sdfsdf gerg 12345   erter", ' ');
+
+	munit_assert_string_equal(array[0], "sdfsdf");
+	munit_assert_string_equal(array[1], "gerg");
+	munit_assert_string_equal(array[2], "12345");
+	munit_assert_string_equal(array[3], "erter");
+	munit_assert_ptr_null(array[4]);
+	free(array[0]);
+	free(array[1]);
+	free(array[2]);
+	free(array[3]);
+	free(array);
+
+	array = ft_split("", ' ');
+	munit_assert_ptr_null(array[0]);
+	free(array);
+
+	array = ft_split("asdf qwerty", '0');
+	munit_assert_string_equal(array[0], "asdf qwerty");
+	munit_assert_ptr_null(array[1]);
+	free(array[1]);
+	free(array);
+
+	array = ft_split("44444444", '4');
+	munit_assert_ptr_null(array[0]);
+	free(array);
+	return (MUNIT_OK);
+}
+
+char	ft_toupper_map(unsigned int i, char c)
+{
+	(void) i;
+	return (ft_toupper(c));
 }
 
 MunitResult	ft_strmapi_test(const MunitParameter params[], void *data)
 {
-	return (MUNIT_SKIP);
+	char *str = ft_strdup("Hello world! This is a str1ng that can bE UPCased.");
+	char *str2 = ft_strmapi(str, &ft_toupper_map);
+
+	munit_assert_string_equal(
+		str2,
+		"HELLO WORLD! THIS IS A STR1NG THAT CAN BE UPCASED."
+	);
+
+	char *str3 = calloc(1, 1);
+	char *str4 = ft_strmapi(str, &ft_toupper_map);
+	munit_assert_string_equal(str4, "HELLO WORLD! THIS IS A STR1NG THAT CAN BE UPCASED.");
+	free(str);
+	free(str2);
+	free(str3);
+	free(str4);
+	return (MUNIT_OK);
+}
+
+void	ft_toupper_iter(unsigned int i, char *c)
+{
+	(void) i;
+	*c = ft_toupper(*c);
 }
 
 MunitResult	ft_striteri_test(const MunitParameter params[], void *data)
 {
-	return (MUNIT_SKIP);
+	char *str = ft_strdup("Hello world! This is a str1ng that can bE UPCased.");
+
+	ft_striteri(str, &ft_toupper_iter);
+	munit_assert_string_equal(
+		str,
+		"HELLO WORLD! THIS IS A STR1NG THAT CAN BE UPCASED."
+	);
+	free(str);
+	return (MUNIT_OK);
 }
 
 MunitResult	ft_putchar_fd_test(const MunitParameter params[], void *data)
